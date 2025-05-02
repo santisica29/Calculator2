@@ -9,7 +9,7 @@ public class Calculator
 
     JsonWriter writer;
 
-    List<Calculation> latestCalculations = new();
+    List<Operation> latestCalculations = new();
 
     public Calculator()
     {
@@ -87,7 +87,7 @@ public class Calculator
 
     public void AddLatestCalculation(double n1, double n2, Operator op, double res)
     {
-        latestCalculations.Add(new Calculation
+        latestCalculations.Add(new Operation
         {
             Num1 = n1,
             Num2 = n2,
@@ -96,8 +96,13 @@ public class Calculator
         });
     }
 
-    public List<Calculation> GetLatestCalculations()
+    public List<Operation> GetLatestCalculations()
     {
         return latestCalculations;
+    }
+
+    public void DeleteList()
+    {
+        latestCalculations.Clear();
     }
 }

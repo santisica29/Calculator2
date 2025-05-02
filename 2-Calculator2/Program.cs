@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using CalculatorLibrary;
+using CalculatorLibrary.Models;
 
 class Program
 {
@@ -42,7 +43,19 @@ class Program
                         Console.WriteLine("Do you want to use this result for your next operation? y/n");
                         var choice = Console.ReadLine().Trim().ToLower();
 
-                        if (choice == "y") numInput1 = calc.GetResult().ToString();
+                        if (choice == "y")
+                        {
+                            numInput1 = calc.GetResult().ToString();
+                            Console.WriteLine("\nYou selected " + numInput1);
+                        }
+                    }
+
+                    Console.WriteLine("Press 'd' to delete the list");
+                    if (Console.ReadLine().Trim().ToLower() == "d")
+                    {
+                        calculator.DeleteList();
+                        Console.WriteLine("List deleted");
+                        Console.ReadKey();
                     }
                 }
                 Console.Clear();

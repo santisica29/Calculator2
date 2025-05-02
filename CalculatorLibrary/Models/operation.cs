@@ -1,7 +1,7 @@
 ﻿
 namespace CalculatorLibrary.Models;
 
-public class Calculation
+public class Operation
 {
     public double Num1 { get; set; }
     public double Num2 { get; set; }
