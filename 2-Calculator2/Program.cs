@@ -82,6 +82,7 @@ class Program
             Console.WriteLine("\n"); // Friendly linespacing.
             Console.Clear();
         }
+        calculator.Finish();
         return;
     }
 }
