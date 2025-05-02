@@ -1,4 +1,5 @@
 ﻿// CalculatorLibrary.cs
+using CalculatorLibrary.Models;
 using Newtonsoft.Json;
 
 namespace CalculatorLibrary;
@@ -7,6 +8,8 @@ public class Calculator
     private int timesCalcWasUsed;
 
     JsonWriter writer;
+
+    List<Calculation> latestCalculations = new();
 
     public Calculator()
     {
@@ -22,6 +25,7 @@ public class Calculator
     public double DoOperation(double num1, double num2, string op)
     {
         double result = double.NaN; // Default value is "not-a-number" if an operation, such as division, could result in an error.
+        Operator typeOp = Operator.Addition;
         writer.WriteStartObject();
         writer.WritePropertyName("Operand1");
         writer.WriteValue(num1);
@@ -33,14 +37,17 @@ public class Calculator
         {
             case "a":
                 result = num1 + num2;
+                typeOp = Operator.Addition;
                 writer.WriteValue("Add");
                 break;
             case "s":
                 result = num1 - num2;
+                typeOp = Operator.Subtraction;
                 writer.WriteValue("Subtract");
                 break;
             case "m":
                 result = num1 * num2;
+                typeOp = Operator.Multiplication;
                 writer.WriteValue("Multiply");
                 break;
             case "d":
@@ -48,6 +55,7 @@ public class Calculator
                 if (num2 != 0)
                 {
                     result = num1 / num2;
+                    typeOp = Operator.Division;
                 }
                 writer.WriteValue("Divide");
                 break;
@@ -60,6 +68,7 @@ public class Calculator
         writer.WriteEndObject();
 
         timesCalcWasUsed++;
+        AddLatestCalculation(num1, num2, typeOp, result);
 
         return result;
     }
@@ -74,5 +83,21 @@ public class Calculator
     public int GetTimesCalcWasUsed()
     {
         return timesCalcWasUsed;
+    }
+
+    public void AddLatestCalculation(double n1, double n2, Operator op, double res)
+    {
+        latestCalculations.Add(new Calculation
+        {
+            Num1 = n1,
+            Num2 = n2,
+            Operator = op,
+            Result = res
+        });
+    }
+
+    public List<Calculation> GetLatestCalculations()
+    {
+        return latestCalculations;
     }
 }

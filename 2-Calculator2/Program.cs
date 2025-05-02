@@ -14,16 +14,46 @@ class Program
 
         while (!endApp)
         {
-            Console.WriteLine($"Times the calculator was used: {calculator.GetTimesCalcWasUsed()} \n");
             // Declare variables and set to empty.
             // Use Nullable types (with ?) to match type of System.Console.ReadLine
             string? numInput1 = "";
             string? numInput2 = "";
             double result = 0;
 
-            // Ask the user to type the first number.
-            Console.Write("Type a number, and then press Enter: ");
-            numInput1 = Console.ReadLine();
+            Console.WriteLine($"Times the calculator was used: {calculator.GetTimesCalcWasUsed()} \n");
+            Console.WriteLine("Press 'v' to see the latest calculations or any other key to start\n");
+
+            if (Console.ReadLine().Trim().ToLower() == "v")
+            {
+                var list = calculator.GetLatestCalculations();
+
+                if (list.Count == 0)
+                {
+                    Console.WriteLine("No calculations yet");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    foreach (var calc in list)
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"{calc.Num1} {calc.GetOperator()} {calc.Num2} = {calc.GetResult()}");
+
+                        Console.WriteLine("Do you want to use this result for your next operation? y/n");
+                        var choice = Console.ReadLine().Trim().ToLower();
+
+                        if (choice == "y") numInput1 = calc.GetResult().ToString();
+                    }
+                }
+                Console.Clear();
+            }
+
+            if (numInput1 == "")
+            {
+                // Ask the user to type the first number.
+                Console.Write("Type a number, and then press Enter: ");
+                numInput1 = Console.ReadLine();
+            }
 
             double cleanNum1 = 0;
             while (!double.TryParse(numInput1, out cleanNum1))
@@ -86,5 +116,5 @@ class Program
         calculator.Finish();
         return;
     }
-}
 
+}
