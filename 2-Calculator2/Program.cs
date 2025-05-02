@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using static CalculatorLibrary.CalculatorLibrary;
+using CalculatorLibrary;
 
 class Program
 {
