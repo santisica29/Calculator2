@@ -14,6 +14,7 @@ class Program
 
         while (!endApp)
         {
+            Console.WriteLine($"Times the calculator was used: {calculator.GetTimesCalcWasUsed()} \n");
             // Declare variables and set to empty.
             // Use Nullable types (with ?) to match type of System.Console.ReadLine
             string? numInput1 = "";
